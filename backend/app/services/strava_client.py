@@ -7,6 +7,7 @@ app (``strava_service``) imports this module and calls e.g.
 from __future__ import annotations
 
 import httpx
+
 from app.config import settings
 
 OAUTH_TOKEN_URL = "https://www.strava.com/oauth/token"
@@ -78,7 +79,9 @@ def get_athlete(access_token: str) -> dict:
         return resp.json()
 
 
-def list_activities(access_token: str, after: int, per_page: int = 100, page: int = 1) -> list[dict]:
+def list_activities(
+    access_token: str, after: int, per_page: int = 100, page: int = 1
+) -> list[dict]:
     """List the athlete's activities after a given epoch timestamp."""
     with httpx.Client(timeout=_TIMEOUT) as client:
         resp = client.get(

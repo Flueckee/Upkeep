@@ -1,5 +1,7 @@
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict, model_validator, field_validator
+
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+
 from app.models.service_interval import IntervalType
 
 
@@ -13,7 +15,10 @@ class ServiceIntervalCreate(BaseModel):
     def check_required_fields(self) -> "ServiceIntervalCreate":
         if self.interval_type in (IntervalType.time, IntervalType.both) and not self.interval_days:
             raise ValueError("interval_days is required for time-based intervals")
-        if self.interval_type in (IntervalType.distance, IntervalType.both) and not self.interval_km:
+        if (
+            self.interval_type in (IntervalType.distance, IntervalType.both)
+            and not self.interval_km
+        ):
             raise ValueError("interval_km is required for distance-based intervals")
         return self
 

@@ -1,8 +1,10 @@
 import enum
 import uuid
-from sqlalchemy import Column, String, Float, Boolean, Date, Text, Enum, ForeignKey
+
+from sqlalchemy import Boolean, Column, Date, Enum, Float, ForeignKey, String, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+
 from app.database import Base
 
 
@@ -36,7 +38,9 @@ class Component(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     bike_id = Column(UUID(as_uuid=True), ForeignKey("bikes.id", ondelete="CASCADE"), nullable=False)
     name = Column(String, nullable=False)
-    category = Column(Enum(ComponentCategory, name="componentcategory", native_enum=False), nullable=False)
+    category = Column(
+        Enum(ComponentCategory, name="componentcategory", native_enum=False), nullable=False
+    )
     is_preset = Column(Boolean, default=False, nullable=False)
     installed_at = Column(Date)
     installed_km = Column(Float, default=0.0)

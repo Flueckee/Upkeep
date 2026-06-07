@@ -8,9 +8,9 @@ from uuid import UUID
 
 import pytest
 
-from app.services.due_service import check_component
-from app.schemas.due import DueStatus
 from app.models.service_interval import IntervalType
+from app.schemas.due import DueStatus
+from app.services.due_service import check_component
 
 TODAY = date.today()
 

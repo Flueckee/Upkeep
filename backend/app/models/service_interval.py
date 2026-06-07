@@ -1,8 +1,10 @@
 import enum
 import uuid
-from sqlalchemy import Column, Integer, Enum, ForeignKey
+
+from sqlalchemy import Column, Enum, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+
 from app.database import Base
 
 
@@ -20,7 +22,9 @@ class ServiceInterval(Base):
         UUID(as_uuid=True), ForeignKey("components.id", ondelete="CASCADE"),
         unique=True, nullable=False
     )
-    interval_type = Column(Enum(IntervalType, name="intervaltype", native_enum=False), nullable=False)
+    interval_type = Column(
+        Enum(IntervalType, name="intervaltype", native_enum=False), nullable=False
+    )
     interval_days = Column(Integer)
     interval_km = Column(Integer)
     reminder_days_before = Column(Integer, default=14, nullable=False)

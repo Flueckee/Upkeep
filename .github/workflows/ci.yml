@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: upkeep
+          POSTGRES_PASSWORD: upkeep
+          POSTGRES_DB: upkeep
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U upkeep"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://upkeep:upkeep@localhost:5432/upkeep
+      SECRET_KEY: ci-secret-key
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv python install 3.12
+      - run: uv venv
+      - run: uv pip install -r requirements.txt -r requirements-dev.txt ruff
+      - name: Lint
+        run: uv run ruff check .
+      - name: Build check
+        run: uv run python -m compileall app
+      - name: Run migrations
+        run: uv run alembic upgrade head
+      - name: Test
+        run: uv run pytest
+
+  mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck
+
+  mobile-bundle:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: mobile
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    strategy:
+      matrix:
+        platform: [ios, android]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - name: Build bundle
+        run: npx expo export --platform ${{ matrix.platform }} --output-dir dist-${{ matrix.platform }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bundle-${{ matrix.platform }}
+          path: mobile/dist-${{ matrix.platform }}

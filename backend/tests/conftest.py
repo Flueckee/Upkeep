@@ -4,11 +4,12 @@ Shared pytest fixtures.
 Test database: upkeep_test (created automatically if missing).
 Each test gets a clean slate — all tables are truncated after the function runs.
 """
-import pytest
 from urllib.parse import urlparse, urlunparse
+
+import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
-from fastapi.testclient import TestClient
 
 from app.config import settings
 from app.database import Base, get_db

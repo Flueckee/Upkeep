@@ -1,8 +1,10 @@
 import uuid
 from datetime import date
+
 from sqlalchemy.orm import Session
+
 from app.models.bike import Bike
-from app.models.component import Component, PRESET_COMPONENTS
+from app.models.component import PRESET_COMPONENTS, Component
 from app.schemas.bike import BikeCreate
 
 

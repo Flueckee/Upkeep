@@ -1,15 +1,14 @@
 from uuid import UUID
+
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from fastapi.responses import Response
 from sqlalchemy.orm import Session, selectinload
+
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.bike import Bike
 from app.models.component import Component
 from app.models.maintenance_log import MaintenanceLog
-from app.models.maintenance_photo import MaintenancePhoto
-from app.models.maintenance_comment import MaintenanceComment
-from app.models.service_interval import ServiceInterval
 from app.models.user import User
 from app.services.pdf_service import generate_pdf
 
