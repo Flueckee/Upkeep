@@ -79,6 +79,17 @@ export default function SettingsScreen({ navigation }: Props) {
         />
       </View>
 
+      {/* Verbindungen */}
+      <Text style={styles.sectionLabel}>VERBINDUNGEN</Text>
+      <View style={styles.card}>
+        <SettingsRow
+          label="Strava"
+          value="Verwalten"
+          onPress={() => navigation.navigate('Strava')}
+          accent
+        />
+      </View>
+
       {/* Account */}
       <Text style={styles.sectionLabel}>ACCOUNT</Text>
       <View style={styles.card}>

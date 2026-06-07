@@ -18,6 +18,7 @@ import DueSoonScreen from '../screens/DueSoonScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import ColorPickerScreen from '../screens/ColorPickerScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import StravaSettingsScreen from '../screens/StravaSettingsScreen';
 
 const Tab = createBottomTabNavigator<TabParamList>();
 const BikeStack = createNativeStackNavigator<BikeStackParamList>();
@@ -78,6 +79,7 @@ function ProfileNavigator() {
       <SettingsStack.Screen name="Profile"        component={ProfileScreen}        options={{ title: 'Profil' }} />
       <SettingsStack.Screen name="ColorPicker"    component={ColorPickerScreen}    options={{ title: 'Akzentfarbe' }} />
       <SettingsStack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ title: 'Passwort ändern' }} />
+      <SettingsStack.Screen name="Strava"         component={StravaSettingsScreen} options={{ title: 'Strava' }} />
     </SettingsStack.Navigator>
   );
 }

@@ -18,3 +18,9 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
     bikes = relationship("Bike", back_populates="user", cascade="all, delete-orphan")
+    strava_connection = relationship(
+        "StravaConnection",
+        back_populates="user",
+        uselist=False,
+        cascade="all, delete-orphan",
+    )
