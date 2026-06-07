@@ -75,10 +75,14 @@ def get_connection_by_user(db: Session, user_id: uuid.UUID) -> StravaConnection 
 
 
 def get_connection_by_athlete(db: Session, athlete_id: int) -> StravaConnection | None:
-    return db.query(StravaConnection).filter(StravaConnection.athlete_id == athlete_id).first()
+    return (
+        db.query(StravaConnection).filter(StravaConnection.athlete_id == athlete_id).first()
+    )
 
 
-def upsert_connection(db: Session, user_id: uuid.UUID, token_payload: dict, scope: str | None) -> StravaConnection:
+def upsert_connection(
+    db: Session, user_id: uuid.UUID, token_payload: dict, scope: str | None
+) -> StravaConnection:
     athlete = token_payload.get("athlete") or {}
     conn = get_connection_by_user(db, user_id)
     if conn is None:
@@ -135,7 +139,10 @@ def resolve_target_bike(db: Session, conn: StravaConnection, gear_id: str | None
     if gear_id:
         mapping = (
             db.query(StravaGearMapping)
-            .filter(StravaGearMapping.connection_id == conn.id, StravaGearMapping.gear_id == gear_id)
+            .filter(
+                StravaGearMapping.connection_id == conn.id,
+                StravaGearMapping.gear_id == gear_id,
+            )
             .first()
         )
         if mapping is not None:
@@ -206,7 +213,9 @@ def apply_activity_update(db: Session, conn: StravaConnection, activity: dict) -
         if old_bike:
             old_bike.total_km = max(0.0, (old_bike.total_km or 0.0) - existing.applied_km)
 
-    new_bike = resolve_target_bike(db, conn, activity.get("gear_id")) if _is_ride(activity) else None
+    new_bike = (
+        resolve_target_bike(db, conn, activity.get("gear_id")) if _is_ride(activity) else None
+    )
     if new_bike is None:
         # No longer maps to a bike (or no longer a ride) → drop the ledger row.
         db.delete(existing)
@@ -235,7 +244,9 @@ def apply_activity_delete(db: Session, conn: StravaConnection, activity_id: int)
     db.commit()
 
 
-def _find_import(db: Session, conn: StravaConnection, activity_id: int) -> StravaImportedActivity | None:
+def _find_import(
+    db: Session, conn: StravaConnection, activity_id: int
+) -> StravaImportedActivity | None:
     return (
         db.query(StravaImportedActivity)
         .filter(
@@ -248,7 +259,9 @@ def _find_import(db: Session, conn: StravaConnection, activity_id: int) -> Strav
 
 # ── Webhook event dispatch ───────────────────────────────────────────────────
 
-def process_activity_event(db: Session, conn: StravaConnection, activity_id: int, aspect_type: str) -> None:
+def process_activity_event(
+    db: Session, conn: StravaConnection, activity_id: int, aspect_type: str
+) -> None:
     """Handle an activity webhook event by fetching the activity and applying it."""
     if aspect_type == "delete":
         apply_activity_delete(db, conn, activity_id)

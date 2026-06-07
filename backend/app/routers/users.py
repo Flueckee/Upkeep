@@ -87,7 +87,7 @@ async def upload_avatar(
     if img.format not in ("JPEG", "PNG"):
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"Unsupported format '{img.format}'. Only JPEG and PNG are accepted for avatars.",
+            detail=f"Unsupported format '{img.format}'. Only JPEG and PNG are accepted for avatars.",  # noqa: E501
         )
 
     # Centre-crop to square then resize

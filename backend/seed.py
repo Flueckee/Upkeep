@@ -86,7 +86,8 @@ def seed() -> None:
             ))
 
         # ── Maintenance logs ──────────────────────────────────────────────────
-        # Chain — last service at 1 250 km, now at 4 250 km → 3 000 km since → OVERDUE (interval 2 500)
+        # Chain — last service at 1 250 km, now at 4 250 km
+        # → 3 000 km since → OVERDUE (interval 2 500)
         db.add(MaintenanceLog(
             component_id=comp("Kette").id,
             performed_at=today - timedelta(days=45),

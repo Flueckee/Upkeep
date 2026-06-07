@@ -122,7 +122,7 @@ class _FooterCanvas:
         self.restoreState()
 
 
-from reportlab.pdfgen.canvas import Canvas as _BaseCanvas
+from reportlab.pdfgen.canvas import Canvas as _BaseCanvas  # noqa: E402
 
 
 class _UpkeepCanvas(_FooterCanvas, _BaseCanvas):  # type: ignore[misc]
@@ -242,7 +242,8 @@ _CATEGORY_LABELS = {
 def _component_section(comp) -> list:
     elems: list = []
 
-    cat = _CATEGORY_LABELS.get(str(comp.category.value if hasattr(comp.category, "value") else comp.category), "—")
+    cat_raw = comp.category.value if hasattr(comp.category, "value") else comp.category
+    cat = _CATEGORY_LABELS.get(str(cat_raw), "—")
     elems.append(Paragraph(comp.name, S_HEADING))
     elems.append(Paragraph(cat, S_CAPTION))
     elems.append(Spacer(1, 2 * mm))

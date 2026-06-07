@@ -46,7 +46,10 @@ def create_interval(
     if component.service_interval:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail="Interval already exists for this component — use PUT /api/intervals/{id} to update it",
+            detail=(
+                "Interval already exists for this component"
+                " — use PUT /api/intervals/{id} to update it"
+            ),
         )
     interval = ServiceInterval(component_id=component_id, **payload.model_dump())
     db.add(interval)
@@ -67,10 +70,20 @@ def update_interval(
         setattr(interval, field, value)
 
     # Re-validate consistency after applying partial update
-    if interval.interval_type in (IntervalType.time, IntervalType.both) and not interval.interval_days:
-        raise HTTPException(status_code=422, detail="interval_days is required for this interval_type")
-    if interval.interval_type in (IntervalType.distance, IntervalType.both) and not interval.interval_km:
-        raise HTTPException(status_code=422, detail="interval_km is required for this interval_type")
+    if (
+        interval.interval_type in (IntervalType.time, IntervalType.both)
+        and not interval.interval_days
+    ):
+        raise HTTPException(
+            status_code=422, detail="interval_days is required for this interval_type"
+        )
+    if (
+        interval.interval_type in (IntervalType.distance, IntervalType.both)
+        and not interval.interval_km
+    ):
+        raise HTTPException(
+            status_code=422, detail="interval_km is required for this interval_type"
+        )
 
     db.commit()
     db.refresh(interval)

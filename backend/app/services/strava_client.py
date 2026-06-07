@@ -79,7 +79,9 @@ def get_athlete(access_token: str) -> dict:
         return resp.json()
 
 
-def list_activities(access_token: str, after: int, per_page: int = 100, page: int = 1) -> list[dict]:
+def list_activities(
+    access_token: str, after: int, per_page: int = 100, page: int = 1
+) -> list[dict]:
     """List the athlete's activities after a given epoch timestamp."""
     with httpx.Client(timeout=_TIMEOUT) as client:
         resp = client.get(

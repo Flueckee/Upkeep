@@ -142,7 +142,9 @@ def test_non_ride_is_skipped(db):
     bike = _make_bike(db, user)
     conn = _make_connection(db, user, default_bike=bike)
 
-    strava_service.apply_activity_create(db, conn, _activity(type_="Run", distance=10000, gear_id=None))
+    strava_service.apply_activity_create(
+        db, conn, _activity(type_="Run", distance=10000, gear_id=None)
+    )
     db.refresh(bike)
     assert bike.total_km == pytest.approx(0.0)
 
