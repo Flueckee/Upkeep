@@ -4,6 +4,7 @@ No database, no HTTP — only Python logic.
 """
 from datetime import date, timedelta
 from types import SimpleNamespace
+from uuid import UUID
 
 import pytest
 
@@ -13,13 +14,16 @@ from app.models.service_interval import IntervalType
 
 TODAY = date.today()
 
+INTERVAL_ID = UUID("00000000-0000-0000-0000-000000000001")
+COMPONENT_ID = UUID("00000000-0000-0000-0000-000000000002")
+
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def make_interval(itype: IntervalType, *, days: int | None = None,
                   km: int | None = None, reminder: int = 14):
     return SimpleNamespace(
-        id="int-id", component_id="comp-id",
+        id=INTERVAL_ID, component_id=COMPONENT_ID,
         interval_type=itype,
         interval_days=days,
         interval_km=km,
@@ -36,7 +40,7 @@ def make_log(days_ago: int, odometer_km: float = 0.0):
 
 def make_component(*, interval=None, logs=None):
     return SimpleNamespace(
-        id="comp-id", name="Chain", category="drivetrain",
+        id=COMPONENT_ID, name="Chain", category="drivetrain",
         service_interval=interval,
         maintenance_logs=logs or [],
     )
