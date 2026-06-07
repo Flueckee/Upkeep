@@ -3,6 +3,7 @@
     "name": "Upkeep",
     "slug": "upkeep",
     "version": "1.0.0",
+    "scheme": "upkeep",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "splash": {

@@ -91,3 +91,20 @@ export interface TokenResponse {
   access_token: string;
   token_type: string;
 }
+
+export interface StravaStatus {
+  connected: boolean;
+  athlete_id: number | null;
+  default_bike_id: string | null;
+  last_backfill_at: string | null;
+}
+
+export interface StravaGearItem {
+  gear_id: string;
+  name: string;
+  distance_km: number;
+  /** Currently mapped Upkeep bike, if any. */
+  bike_id: string | null;
+  /** Gear is explicitly excluded from import. */
+  ignored: boolean;
+}

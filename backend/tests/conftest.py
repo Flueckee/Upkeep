@@ -4,7 +4,7 @@ Shared pytest fixtures.
 Test database: upkeep_test (created automatically if missing).
 Each test gets a clean slate — all tables are truncated after the function runs.
 """
-import pytes    t
+import pytest
 from urllib.parse import urlparse, urlunparse
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
@@ -75,7 +75,8 @@ def client(test_engine):
     # Truncate in FK-safe order after the test
     with test_engine.connect() as conn:
         conn.execute(text(
-            "TRUNCATE service_intervals, maintenance_logs, components, bikes, users CASCADE"
+            "TRUNCATE strava_imported_activities, strava_gear_mappings, strava_connections, "
+            "service_intervals, maintenance_logs, components, bikes, users CASCADE"
         ))
         conn.commit()
 

@@ -3,7 +3,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from app.routers import auth, bikes, components, logs, intervals, photos, comments, export, users
+from app.routers import auth, bikes, components, logs, intervals, photos, comments, export, users, integrations
 
 app = FastAPI(title="Upkeep API", version="0.1.0")
 
@@ -26,6 +26,7 @@ app.include_router(photos.router)
 app.include_router(comments.router)
 app.include_router(export.router)
 app.include_router(users.router)
+app.include_router(integrations.router)
 
 # Serve uploaded media files under /media
 _upload_dir = Path(os.getenv("UPLOAD_DIR", "uploads"))

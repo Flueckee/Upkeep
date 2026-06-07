@@ -81,6 +81,17 @@ Scan the QR code with **Expo Go**, or press `a` / `i` for emulators.
 | `DATABASE_URL` | PostgreSQL connection string | `postgresql://upkeep:upkeep@localhost:5432/upkeep` |
 | `SECRET_KEY` | JWT signing secret — **change this in production** | — |
 | `ACCESS_TOKEN_EXPIRE_MINUTES` | Token lifetime | `10080` (7 days) |
+| `STRAVA_CLIENT_ID` | Strava API application client id (optional) | — |
+| `STRAVA_CLIENT_SECRET` | Strava API application client secret (optional) | — |
+| `STRAVA_WEBHOOK_VERIFY_TOKEN` | Shared secret for the Strava webhook handshake | — |
+| `PUBLIC_BASE_URL` | Public HTTPS URL of this backend (OAuth callback + webhook), no trailing slash | — |
+| `APP_DEEP_LINK` | Deep link the mobile app returns to after OAuth | `upkeep://strava-connected` |
+| `STRAVA_BACKFILL_DAYS` | Days of history imported once on connect | `30` |
+
+> **Strava setup:** create an API app at https://www.strava.com/settings/api,
+> set its *Authorization Callback Domain* to your `PUBLIC_BASE_URL` host, then
+> after the backend is live and publicly reachable register the webhook once with
+> `cd backend && python -m scripts.strava_webhook`.
 
 ### `mobile/.env`
 

@@ -28,6 +28,7 @@ export type SettingsStackParamList = {
   Profile: undefined;
   ColorPicker: undefined;
   ChangePassword: undefined;
+  Strava: undefined;
 };
 
 export type TabParamList = {
