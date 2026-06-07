@@ -1,9 +1,22 @@
 import os
 from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from app.routers import auth, bikes, components, logs, intervals, photos, comments, export, users, integrations
+
+from app.routers import (
+    auth,
+    bikes,
+    comments,
+    components,
+    export,
+    integrations,
+    intervals,
+    logs,
+    photos,
+    users,
+)
 
 app = FastAPI(title="Upkeep API", version="0.1.0")
 

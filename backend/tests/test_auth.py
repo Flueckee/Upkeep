@@ -1,7 +1,5 @@
 """Integration tests for /api/auth/* endpoints."""
-import pytest
 from fastapi.testclient import TestClient
-
 
 _USER = {"email": "auth@test.com", "password": "pass1234", "name": "Auth User"}
 

@@ -1,7 +1,8 @@
 from datetime import date
+
 from app.models.component import Component
 from app.models.service_interval import IntervalType
-from app.schemas.due import DueStatus, ComponentDueResponse
+from app.schemas.due import ComponentDueResponse, DueStatus
 from app.schemas.interval import ServiceIntervalResponse
 
 

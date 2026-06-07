@@ -1,12 +1,18 @@
 from uuid import UUID
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.component import Component
-from app.models.service_interval import ServiceInterval, IntervalType
+from app.models.service_interval import IntervalType, ServiceInterval
 from app.models.user import User
-from app.schemas.interval import ServiceIntervalCreate, ServiceIntervalUpdate, ServiceIntervalResponse
+from app.schemas.interval import (
+    ServiceIntervalCreate,
+    ServiceIntervalResponse,
+    ServiceIntervalUpdate,
+)
 
 router = APIRouter(tags=["intervals"])
 

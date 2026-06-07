@@ -1,6 +1,8 @@
 import enum
 from uuid import UUID
+
 from pydantic import BaseModel, ConfigDict
+
 from app.models.component import ComponentCategory
 from app.schemas.interval import ServiceIntervalResponse
 

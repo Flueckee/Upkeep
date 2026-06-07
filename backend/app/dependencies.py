@@ -1,8 +1,10 @@
 import uuid
+
 from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError
 from sqlalchemy.orm import Session
+
 from app.database import get_db
 from app.models import User
 from app.services.auth_service import decode_access_token

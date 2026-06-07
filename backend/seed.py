@@ -17,12 +17,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 # Load .env so DATABASE_URL etc. are available
 from dotenv import load_dotenv  # noqa: E402
+
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 from app.database import SessionLocal  # noqa: E402
-from app.models import User, Component, MaintenanceLog  # noqa: E402
-from app.models.service_interval import ServiceInterval, IntervalType  # noqa: E402
+from app.models import Component, MaintenanceLog, User  # noqa: E402
 from app.models.bike import BikeType  # noqa: E402
+from app.models.service_interval import IntervalType, ServiceInterval  # noqa: E402
 from app.schemas.bike import BikeCreate  # noqa: E402
 from app.services.auth_service import hash_password  # noqa: E402
 from app.services.bike_service import create_bike_with_presets  # noqa: E402

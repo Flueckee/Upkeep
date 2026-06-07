@@ -7,6 +7,7 @@ app (``strava_service``) imports this module and calls e.g.
 from __future__ import annotations
 
 import httpx
+
 from app.config import settings
 
 OAUTH_TOKEN_URL = "https://www.strava.com/oauth/token"

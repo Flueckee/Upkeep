@@ -1,15 +1,15 @@
 from datetime import date
 from uuid import UUID
+
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy.orm import Session, selectinload
+
 from app.database import get_db
 from app.dependencies import get_current_user
 from app.models.bike import Bike
 from app.models.component import Component
-from app.models.maintenance_log import MaintenanceLog
-from app.models.service_interval import ServiceInterval
 from app.models.user import User
-from app.schemas.bike import BikeCreate, BikeUpdate, BikeResponse, OdometerUpdate
+from app.schemas.bike import BikeCreate, BikeResponse, BikeUpdate, OdometerUpdate
 from app.schemas.due import ComponentDueResponse
 from app.services.bike_service import create_bike_with_presets
 from app.services.due_service import get_due_components

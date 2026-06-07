@@ -1,5 +1,7 @@
 from uuid import UUID
-from pydantic import BaseModel, ConfigDict, model_validator, field_validator
+
+from pydantic import BaseModel, ConfigDict, field_validator, model_validator
+
 from app.models.service_interval import IntervalType
 
 

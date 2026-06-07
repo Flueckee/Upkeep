@@ -4,12 +4,13 @@ No database, no HTTP — only Python logic.
 """
 from datetime import date, timedelta
 from types import SimpleNamespace
+from uuid import uuid4
 
 import pytest
 
-from app.services.due_service import check_component
-from app.schemas.due import DueStatus
 from app.models.service_interval import IntervalType
+from app.schemas.due import DueStatus
+from app.services.due_service import check_component
 
 TODAY = date.today()
 
@@ -19,7 +20,7 @@ TODAY = date.today()
 def make_interval(itype: IntervalType, *, days: int | None = None,
                   km: int | None = None, reminder: int = 14):
     return SimpleNamespace(
-        id="int-id", component_id="comp-id",
+        id=uuid4(), component_id=uuid4(),
         interval_type=itype,
         interval_days=days,
         interval_km=km,
@@ -36,7 +37,7 @@ def make_log(days_ago: int, odometer_km: float = 0.0):
 
 def make_component(*, interval=None, logs=None):
     return SimpleNamespace(
-        id="comp-id", name="Chain", category="drivetrain",
+        id=uuid4(), name="Chain", category="drivetrain",
         service_interval=interval,
         maintenance_logs=logs or [],
     )

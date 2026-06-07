@@ -1,7 +1,10 @@
 from __future__ import annotations
+
 from datetime import date
 from uuid import UUID
+
 from pydantic import BaseModel, ConfigDict
+
 from app.models.component import ComponentCategory
 
 
@@ -40,4 +43,5 @@ class ComponentResponse(BaseModel):
 
 # Deferred import to avoid circular dependency at module load time
 from app.schemas.interval import ServiceIntervalResponse  # noqa: E402
+
 ComponentResponse.model_rebuild()

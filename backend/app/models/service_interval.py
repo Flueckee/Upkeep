@@ -1,8 +1,10 @@
 import enum
 import uuid
-from sqlalchemy import Column, Integer, Enum, ForeignKey
+
+from sqlalchemy import Column, Enum, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
+
 from app.database import Base
 
 

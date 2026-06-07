@@ -1,6 +1,6 @@
 """Integration tests for bikes, components, logs, and intervals."""
-import pytest
 from datetime import date, timedelta
+
 from fastapi.testclient import TestClient
 
 
@@ -158,7 +158,7 @@ def test_log_delete_endpoint_does_not_exist(client: TestClient, auth_headers: di
         "performed_at": today_iso(), "odometer_km": 100.0, "description": "X"
     }, headers=auth_headers).json()
     resp = client.delete(f"/api/logs/{log['id']}", headers=auth_headers)
-    assert resp.status_code == 404  # route doesn't exist → 404
+    assert resp.status_code == 405  # path exists but only GET is registered → 405
 
 
 # ── Service Intervals ─────────────────────────────────────────────────────────
